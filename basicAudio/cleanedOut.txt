@@ -1,0 +1,28 @@
+﻿The ff was just cleaned out of Program.cs to make it easier to test out the new stuff
+
+/* The following doesn't appear to make any noise, based on: Console.Beep(freq Hz, time ms) (doesn't work in mac or linux)
+		 * at least when run from within Xamarin studio */
+		Console.Beep (5000, 1000);
+		System.Threading.Thread.Sleep (1000);
+		Console.Beep (7500, 1000);
+		System.Threading.Thread.Sleep (1000);
+		Console.Beep (10000, 3000);
+
+		/* This doesn't work either in mac, but it does in linux ... maybe it does work outside of xamarin studio
+		 * No, it doesn't */
+		/* System.Media.SystemSounds.Beep.Play ();
+		System.Threading.Thread.Sleep (1000);
+		System.Media.SystemSounds.Beep.Play ();
+		System.Threading.Thread.Sleep (2000);
+		System.Media.SystemSounds.Beep.Play (); */
+
+		/* temp take this out to see if the Console.Beep works with our Mono:
+		// using NSSound idea from: http://stackoverflow.com/questions/11593794/easiest-way-to-play-sound-with-mono-on-osx
+		// it builds and runs in Xamarin, but it doesn't make any sound
+		// when I try to run it from CLI, it crashes ....
+		NSApplication.Init ();
+		var audio = new NSSound ("../../media/applause_y.wav", byRef: false);
+		audio.Play ();
+		audio.Dispose ();
+		*/
+

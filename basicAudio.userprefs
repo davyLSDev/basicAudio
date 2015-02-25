@@ -1,0 +1,23 @@
+﻿<Properties StartupItem="basicAudio/basicAudio.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="basicAudio/Program.cs">
+    <Files>
+      <File FileName="basicAudio/Program.cs" Line="3" Column="3" />
+      <File FileName="basicAudio/cleanedOut.txt" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="basicAudio" expanded="True">
+            <Node name="References" expanded="True" />
+            <Node name="Program.cs" selected="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
