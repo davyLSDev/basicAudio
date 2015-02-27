@@ -25,4 +25,79 @@
 		audio.Play ();
 		audio.Dispose ();
 		*/
+		
+Code from Record (which works):
+		/* string recordingPath;
+		recordingPath = "test.wav";
+		double recordingTime = 1000; // RecordFor (double Duration) ... not sure what 1 Sec. looks like: 1000?
+		NSUrl recordingURL = new NSUrl (recordingPath);
+		NSError errorRecording = new NSError ();
+		NSDictionary recordingSettings = new NSDictionary ();
+		AVAudioRecorder myAudioRecorder = new AVAudioRecorder (); 
+		/* ? putting this in (recordingURL, recordingSettings, errorRecording) requires using a static ;
+		 * Not quite sure how to do that, but this is Obsolete, and for that matter, so is
+		 * the Playback instantiation I've chosen. So how do you get all this stuff in that is needed? 
+		maybe with an initWithURL ... however you do that */
+
+		/* string debugMSG;
+		debugMSG = myAudioRecorder.DebugDescription;
+		MessageBox.Show ("Debug info for recording; " + debugMSG);
+		if (myAudioRecorder.PrepareToRecord ()) { 
+			myAudioRecorder.Record (); 
+			myAudioRecorder.RecordFor (recordingTime);
+		} */
+		NSApplication.Init ();
+		string recordingPath;
+		recordingPath = "test.wav";
+		double recordingTime = 5000; // RecordFor (double Duration) ... not sure what 1 Sec. looks like: 1000?
+		NSUrl recordingURL = new NSUrl (recordingPath);
+		NSError errorRecording = new NSError ();
+		// This next bit comes partially from a C# example here:
+		// http://macapi.xamarin.com/index.aspx?link=T%3AMonoMac.AVFoundation.AVAudioRecorder 
+		var settings = new AudioSettings {
+			Format = AudioFormatType.LinearPCM,
+			AudioQuality = AVAudioQuality.High,
+			SampleRate = 44100f,
+			NumberChannels = 1
+		};
+		MessageBox.Show ("Debug MSSG before setting up recorder");
+
+		try
+		{
+			// seems BROKEN: 
+			// var recorder = AVAudioRecorder.ToUrl (recordingURL, settings, out errorRecording);
+			var recorder = AVAudioRecorder.Create (recordingURL, settings, out errorRecording);
+
+			if (recorder == null){
+				MessageBox.Show (errorRecording.ToString());
+				return;
+			}
+
+
+			if (recorder.PrepareToRecord ()) {
+				MessageBox.Show ("Recorder is prepared");
+			} else {
+				MessageBox.Show ("Recorder is not prepared");
+			}
+
+			if (recorder.RecordFor (recordingTime)) {
+				MessageBox.Show ("Recording now");
+			} else {
+				MessageBox.Show ("Not recording for some reason");
+			}
+		}
+		finally {
+			MessageBox.Show ("The recording error is: " + errorRecording.ToString ());
+		}
+		
+				
+Code from Play (which works):
+
+string mediaPath;
+		mediaPath = "../../test.wav";
+		NSUrl mediaURL = new NSUrl (mediaPath);
+		NSError error = new NSError ();
+		AVAudioPlayer myAudioPlayer = new AVAudioPlayer (mediaURL, error);
+		myAudioPlayer.PrepareToPlay ();
+		myAudioPlayer.Play ();								
 

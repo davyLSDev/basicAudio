@@ -1,0 +1,9 @@
+/* TO DO
+ * get rid of extraneous 'using' statements
+ * ... error checking for file not found etc
+ * make this work on OSX 10.6
+ * check for system version during runtime to select the right drivers
+ * make this cross-platform
+ * make a nice user interface with VU meter, and indicator bar for length of media
+ * more controls: ffwd, rev
+ */

@@ -2,17 +2,21 @@
 using System.Windows.Forms;
 using System.Drawing;
 using System.Media;
-using MonoMac;
-using MonoMac.Foundation;
-using MonoMac.AppKit;
-using MonoMac.AVFoundation;
-using MonoMac.AudioUnit;
-using MonoMac.AudioUnitWrapper;
-
+// using MonoMac;
+// using MonoMac.Foundation;
+// using MonoMac.AppKit;
+// using MonoMac.AVFoundation;
 // using MonoMac.AudioUnit;
 // using MonoMac.AudioToolbox;
+// using MonoMac.AudioUnitWrapper;
+
+using BasicAudio;
+
 
 class MForm : Form {
+	public AudioInterface _audioDevice = new AudioInterface();
+	public int _audioError;
+
 	public MForm() {
 		Text = "MacOSX Audio {record/play}er";
 		Size = new System.Drawing.Size(350, 150);
@@ -45,96 +49,30 @@ class MForm : Form {
 	}
 
 	void OnClickRecord(object sender, EventArgs e) {
-		// MessageBox.Show ("Recording");
-
-		/* string recordingPath;
-		recordingPath = "test.wav";
-		double recordingTime = 1000; // RecordFor (double Duration) ... not sure what 1 Sec. looks like: 1000?
-		NSUrl recordingURL = new NSUrl (recordingPath);
-		NSError errorRecording = new NSError ();
-		NSDictionary recordingSettings = new NSDictionary ();
-		AVAudioRecorder myAudioRecorder = new AVAudioRecorder (); 
-		/* ? putting this in (recordingURL, recordingSettings, errorRecording) requires using a static ;
-		 * Not quite sure how to do that, but this is Obsolete, and for that matter, so is
-		 * the Playback instantiation I've chosen. So how do you get all this stuff in that is needed? 
-		maybe with an initWithURL ... however you do that */
-
-		/* string debugMSG;
-		debugMSG = myAudioRecorder.DebugDescription;
-		MessageBox.Show ("Debug info for recording; " + debugMSG);
-		if (myAudioRecorder.PrepareToRecord ()) { 
-			myAudioRecorder.Record (); 
-			myAudioRecorder.RecordFor (recordingTime);
-		} */
-		NSApplication.Init ();
-		string recordingPath;
-		recordingPath = "/Users/davy/test.wav";
-		double recordingTime = 5000; // RecordFor (double Duration) ... not sure what 1 Sec. looks like: 1000?
-		NSUrl recordingURL = new NSUrl (recordingPath);
-		NSError errorRecording = new NSError ();
-		// This next bit comes from a C# example here:
-		// http://macapi.xamarin.com/index.aspx?link=T%3AMonoMac.AVFoundation.AVAudioRecorder 
-		var settings = new AudioSettings {
-		// var settings = new AVAudioRecorderSettings () {
-		// var settings = new 
-			// Audio
-			Format = MonoMac.AudioToolbox.AudioFormatType.LinearPCM, //not sure this is the same, but all I could match with.
-				// AudioFormatType.LinearPCM,
-			AudioQuality = AVAudioQuality.High,
-			SampleRate = 44100f,
-			NumberChannels = 1
-		};
-		MessageBox.Show ("Debug MSSG before setting up recorder");
-
-		try
-		{
-			// seems BROKEN: 
-			// var recorder = AVAudioRecorder.ToUrl (recordingURL, settings, out errorRecording);
-			var recorder = AVAudioRecorder.Create (recordingURL, settings, out errorRecording);
-
-			if (recorder == null){
-				MessageBox.Show (errorRecording.ToString());
-				return;
-			}
-
-
-			if (recorder.PrepareToRecord ()) {
-				MessageBox.Show ("Recorder is prepared");
-			} else {
-				MessageBox.Show ("Recorder is not prepared");
-			}
-
-			if (recorder.RecordFor (recordingTime)) {
-				MessageBox.Show ("Recording now");
-			} else {
-				MessageBox.Show ("Not recording for some reason");
-			}
+		_audioError = _audioDevice.Record();
+		if (_audioError != 0) {
+			MessageBox.Show ("Recording error is: " + _audioError.ToString ());
 		}
-		finally {
-			MessageBox.Show ("The recording error is: " + errorRecording.ToString ());
-		}
-
-		// I never see the ff message:
-		MessageBox.Show ("Debug MSSG after setting up the recorder");
-
-		MessageBox.Show ("Should have recorded");
+		return; // right for now ignore all the real code which doesn't even work on Mac OSX 10.6!
 
 	}
 
 	void OnClickStop(object sender, EventArgs e) {
+		_audioError = _audioDevice.Stop();
+		if (_audioError != 0) {
+			MessageBox.Show ("Stop recording error is: " + _audioError.ToString ());
+		}
+		return; // right for now ignore all the real code which doesn't even work on Mac OSX 10.6!
 
-		MessageBox.Show ("Stop ... a place to check code.");
 	}
 
 	void OnClickPlay(object sender, EventArgs e) {
-		// MessageBox.Show ("Playing");
-		string mediaPath;
-		mediaPath = "../../media/applause_y.wav";
-		NSUrl mediaURL = new NSUrl (mediaPath);
-		NSError error = new NSError ();
-		AVAudioPlayer myAudioPlayer = new AVAudioPlayer (mediaURL, error);
-		myAudioPlayer.PrepareToPlay ();
-		myAudioPlayer.Play ();
+		_audioError = _audioDevice.Play();
+		if (_audioError != 0) {
+			MessageBox.Show ("Playing error is: " + _audioError.ToString ());
+		}
+		return; // right for now ignore all the real code which doesn't even work on Mac OSX 10.6!
+
 	}
 
 	void OnClickQuit(object sender, EventArgs e) {
